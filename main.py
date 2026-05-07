@@ -7,7 +7,7 @@ import pytz
 WEBHOOK_URL = "https://discord.com/api/webhooks/1502018575970603164/oTnFrqc0fPDfa8nxFMnotpleBfgJ0R2ny9H-6EkB5UupHfPkNsTLBDrh3lVOWRuaQYKz"
 
 
-def get_fuel_prices():
+ddef get_fuel_prices():
     url = "https://www.autocentrum.pl/paliwa/ceny-paliw/"
 
     headers = {
@@ -15,16 +15,27 @@ def get_fuel_prices():
     }
 
     response = requests.get(url, headers=headers)
-    soup = BeautifulSoup(response.text, "html.parser")
 
-    prices = soup.find_all("span", class_="price-value")
+    text = response.text
 
     try:
-        pb95 = prices[0].text.strip()
-        pb98 = prices[1].text.strip()
-        on = prices[2].text.strip()
-        lpg = prices[3].text.strip()
-    except:
+        # województwo pomorskie
+        fragment = text.split("pomorskie")[1]
+
+        prices = []
+
+        import re
+
+        matches = re.findall(r'(\d,\d\d)', fragment)
+
+        pb95 = matches[0]
+        pb98 = matches[1]
+        on = matches[2]
+        lpg = matches[4]
+
+    except Exception as e:
+        print(e)
+
         pb95 = "brak"
         pb98 = "brak"
         on = "brak"
