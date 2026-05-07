@@ -7,7 +7,7 @@ import pytz
 WEBHOOK_URL = "https://discord.com/api/webhooks/1502018575970603164/oTnFrqc0fPDfa8nxFMnotpleBfgJ0R2ny9H-6EkB5UupHfPkNsTLBDrh3lVOWRuaQYKz"
 
 
-ddef get_fuel_prices():
+def get_fuel_prices():
     url = "https://www.autocentrum.pl/paliwa/ceny-paliw/"
 
     headers = {
